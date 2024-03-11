@@ -6,30 +6,31 @@ struct Product {
     std::string _desc;
 };
 
-class Store : public std::vector<Product> {
+class Store : private std::vector<Product> {
+    public:
+        void addProduct(const Product & product) {
+            return push_back(product);
+        }
+        int nbProducts() {
+            return size();
+        }
+        void print(std::ostream & os) {
+            for (const Product & p : (*this))
+                os << p._id << " - " << p._desc << std::endl;
+        } 
 };
 
-void addProduct(Store & store, const Product & product) {
-    return store.push_back(product);
-}
 
-int nbProducts(const Store & store) {
-    return store.size();
-}
 
-void print(const Store & store, std::ostream & os) {
-    for (const Product & p : store)
-        os << p._id << " - " << p._desc << std::endl;
-} 
 
 int main() {
     Store store;
-    addProduct(store, {"t42", "défibrillateur de tractopelle"});
-    addProduct(store, {"z37", "savon à bétonnière"});
-    print(store, std::cout);
-    std::cout << nbProducts(store) << std::endl;
+    store.addProduct({"t42", "défibrillateur de tractopelle"});
+    store.addProduct({"z37", "savon à bétonnière"});
+    store.print(std::cout);
+    std::cout << store.nbProducts() << std::endl;
 
-    std::cout << store[-1]._desc << std::endl;
+    //std::cout << store[-1]._desc << std::endl;
 
     return 0;
 }
