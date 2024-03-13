@@ -1,11 +1,12 @@
 #pragma once
 
 #include "Itemable.hpp"
+#include "Titleable.hpp"
 
 #include <fstream>
 #include <iostream>
 
-class Board : public Itemable {
+class Board : public Itemable, public Titleable {
     private:
         std::vector<std::string> _tasks;
 
