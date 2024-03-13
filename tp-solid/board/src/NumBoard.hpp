@@ -11,4 +11,8 @@ class NumBoard : public Board {
             add(std::to_string(next_id) + ". " + task);
             ++next_id;
         }
+
+        virtual std::string getTitle() const override {
+            return "NumBoard";
+        }
 };
