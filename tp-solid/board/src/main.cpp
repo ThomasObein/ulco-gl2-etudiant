@@ -33,6 +33,7 @@ int main() {
 
     NumBoard b2;
     testNumBoard(b2);
+    testBoard(b2);
 
     return 0;
 }
