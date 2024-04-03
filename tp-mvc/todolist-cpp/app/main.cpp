@@ -10,9 +10,10 @@ int main() {
     std::cout << showTask(t) << std::endl;
 
     Board b;
-    b.addTodo("TODO 1");
-    b.addTodo("TODO 2");
-    b.addTodo("TODO 3");
+    b.addTodo("Rentrer à la maison");
+    b.addTodo("Afficher un board");
+    b.addTodo("Manger");
+    b.addTodo("Dormir");
 
     b.toDone(2);
 
