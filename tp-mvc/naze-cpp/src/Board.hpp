@@ -23,8 +23,9 @@ class Board {
         int getJ() const;
         Cell operator()(int i, int j) const;
 
+        void tryGoAt(int i, int j);
         void tryGoLeft();
-
-        // TODO
-        
+        void tryGoRight();
+        void tryGoUp();
+        void tryGoDown();
 };

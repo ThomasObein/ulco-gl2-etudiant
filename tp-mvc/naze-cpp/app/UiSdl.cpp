@@ -63,7 +63,9 @@ bool uiTick(SDL_Window * window, SDL_Renderer * renderer, Board & board) {
         if (event.type == SDL_KEYDOWN) {
             switch (event.key.keysym.sym) {
                 case SDLK_LEFT:   board.tryGoLeft();  break;
-                // TODO        
+                case SDLK_RIGHT:   board.tryGoRight();  break;
+                case SDLK_UP:   board.tryGoUp();  break;
+                case SDLK_DOWN:   board.tryGoDown();  break;
                 case SDLK_ESCAPE: exit(0);
             }
         }
