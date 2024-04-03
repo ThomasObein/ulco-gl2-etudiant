@@ -7,6 +7,6 @@
 - [X] afficher un board (+ tests unitaires)
 - [X] passer une tache en "done" (+ tests unitaires)
 - [X] afficher un board (+ test dans le programme principal)
-- [] implémenter un menu (programme principal)
+- [X] implémenter un menu (programme principal)
 
 
