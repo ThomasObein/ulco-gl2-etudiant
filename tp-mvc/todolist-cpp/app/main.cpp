@@ -14,6 +14,8 @@ int main() {
     b.addTodo("TODO 2");
     b.addTodo("TODO 3");
 
+    b.toDone(2);
+
     std::cout << showBoard(b) << std::endl;
     
     return 0;
