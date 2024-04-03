@@ -13,6 +13,8 @@ int main() {
     b.addTodo("TODO 1");
     b.addTodo("TODO 2");
     b.addTodo("TODO 3");
+
+    std::cout << showBoard(b) << std::endl;
     
     return 0;
 }
