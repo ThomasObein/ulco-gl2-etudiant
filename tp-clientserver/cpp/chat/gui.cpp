@@ -1,6 +1,7 @@
 #include <gtkmm.h>
 #include <hv/WebSocketClient.h>
 
+
 class MyWindow : public Gtk::Window {
 
     private:
@@ -45,9 +46,23 @@ class MyWindow : public Gtk::Window {
 
 int main(int argc, char ** argv) {
 
+
     Gtk::Main kit(argc, argv);
     
     MyWindow window;
+
+    hv::WebSocketClient ws;
+    ws.onopen = [&window]() {
+        window.displayMsg("connected");
+    };
+    ws.onmessage = [&window](const std::string& msg) {
+        window.displayMsg(msg);
+    };
+    ws.onclose = [&window]() {
+        window.displayMsg("disconnected");
+        exit(0);
+    };
+    ws.open("ws://127.0.0.1:9000");
 
     kit.run(window);
 

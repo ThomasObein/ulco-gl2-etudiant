@@ -11,17 +11,34 @@ int main() {
 
     hv::WebSocketService ws;
     ws.onopen = [&net](const WebSocketChannelPtr& channel, const HttpRequestPtr& req) {
-        net.add(channel);
+        net.addPending(channel);
         std::cout << "client connected" << std::endl;
     };
     ws.onmessage = [&net](const WebSocketChannelPtr& channel, const std::string& msg) {
-        auto sendInput = [&msg](const WebSocketChannelPtr & channel) {
-            channel->send(msg);
-        };
-        net.map(sendInput);
+        if (net.isPending(channel)) {
+            if (msg != "") {
+                if (!net.giveName(channel, msg)) {
+                    channel->send("Ce nom d'utilisateur existe déjà.");
+                }
+                else {
+                    channel->send("Bienvenue " + msg + "!");
+                }
+            }
+        }
+        else {
+            auto name = net.findName(channel);
+            if (name.has_value()) {
+                std::string message = name.value() + ": " + msg;
+                auto sendInput = [&net, &message](const WebSocketChannelPtr & channel) {
+                    if (!net.isPending(channel)) channel->send(message);
+                };
+                net.map(sendInput);
+            }
+        }
     };
     ws.onclose = [&net](const WebSocketChannelPtr& channel) {
-        net.del(channel);
+        if (net.isPending(channel)) net.delPending(channel);
+        else net.delConnection(channel);
         std::cout << "client disconnected" << std::endl;
     };
 
