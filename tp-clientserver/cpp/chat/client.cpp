@@ -11,7 +11,7 @@ int main(int argc, char** argv) {
         std::cout << "connected" << std::endl;
     };
     ws.onmessage = [](const std::string& msg) {
-        std::cout << "received: " << msg << std::endl;
+        std::cout << msg << std::endl;
     };
     ws.onclose = []() {
         std::cout << "disconnected" << std::endl;
@@ -19,7 +19,17 @@ int main(int argc, char** argv) {
     };
     ws.open("ws://127.0.0.1:9000");
 
+    std::string input;
+    std::cout << "Entrez un message" << std::endl;
     while (true) {
+        std::getline(std::cin, input);
+        
+        if (input == "") {
+            ws.close();
+            break;
+        }
+
+        ws.send(input);
         std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
 
