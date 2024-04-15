@@ -24,7 +24,7 @@ class Jeu {
         /// @return 
         bool isCellFree(int i, int j);
 
-        void updateStatus();
+        bool hasVictory(Cell cellType);
     public:
         /// Constructeur à utiliser.
         Jeu();

@@ -51,20 +51,32 @@ bool Jeu::jouer(int i, int j) {
         {
         case Status::RougeJoue:
             _plateau[i][j] = Cell::Rouge;
+            if (hasVictory(Cell::Rouge)) _status = Status::RougeGagne;
+            else _status = Status::VertJoue;
             break;
         case Status::VertJoue:
             _plateau[i][j] = Cell::Vert;
+            if (hasVictory(Cell::Vert)) _status = Status::VertGagne;
+            else _status = Status::RougeJoue;
             break;
         }
-        updateStatus();
+        return true;
     }
     return false;
 }
 
-void Jeu::updateStatus() {
-    // TODO: check victoire
+bool Jeu::hasVictory(Cell cellType) {
 
-    _status = _status == Status::RougeJoue ? Status::VertJoue : Status::RougeJoue;
+    for (int i = 0; i < 3; i++) {
+        if (getCell(i, 0) == cellType && getCell(i, 1) == cellType && getCell(i, 2) == cellType) return true;
+        if (getCell(0, i) == cellType && getCell(1, i) == cellType && getCell(2, i) == cellType) return true;
+    }
+
+    // Diagonales
+    if (getCell(0, 0) == cellType && getCell(1, 1) == cellType && getCell(2, 2) == cellType) return true;
+    if (getCell(0, 2) == cellType && getCell(1, 1) == cellType && getCell(2, 0) == cellType) return true;
+
+    return false;
 }
 
 void Jeu::raz() {
