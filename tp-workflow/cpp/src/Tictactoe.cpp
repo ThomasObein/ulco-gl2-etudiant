@@ -60,9 +60,28 @@ bool Jeu::jouer(int i, int j) {
             else _status = Status::RougeJoue;
             break;
         }
+
+        if (!isGameFinished() && isGameDraw()) {
+            _status = Status::Egalite;
+        }
         return true;
     }
     return false;
+}
+
+bool Jeu::isGameFinished() {
+    return _status == Status::VertGagne || _status == Status::RougeGagne || _status == Status::Egalite;
+}
+
+bool Jeu::isGameDraw() {
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (getCell(i, j) == Cell::Vide) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 bool Jeu::hasVictory(Cell cellType) {

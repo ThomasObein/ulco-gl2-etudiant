@@ -141,3 +141,19 @@ TEST_CASE("test victoire vert diagonale droite gauche") {
 
     REQUIRE(jeu.getStatus() == Status::VertGagne);
 }
+
+TEST_CASE("test egalite") {
+    Jeu jeu;
+
+    jeu.jouer(0, 0); 
+    jeu.jouer(0, 2); 
+    jeu.jouer(0, 1); 
+    jeu.jouer(1, 0);
+    jeu.jouer(1, 1); 
+    jeu.jouer(2, 2);
+    jeu.jouer(1, 2);
+    jeu.jouer(2, 1);
+    jeu.jouer(2, 0);
+
+    REQUIRE(jeu.getStatus() == Status::Egalite);
+}

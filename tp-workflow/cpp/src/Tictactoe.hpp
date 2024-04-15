@@ -25,6 +25,9 @@ class Jeu {
         bool isCellFree(int i, int j);
 
         bool hasVictory(Cell cellType);
+
+        bool isGameDraw();
+
     public:
         /// Constructeur à utiliser.
         Jeu();
@@ -34,6 +37,9 @@ class Jeu {
 
         /// Retourne l'état d'une case du plateau
         Cell getCell(int i, int j) const;
+
+        /// Retourne vrai si la partie est terminée, faux sinon
+        bool isGameFinished();
 
         /// Joue un coup pour le joueur courant.
         /// 
