@@ -1,3 +1,3 @@
 /// \mainpage
 /// 
-/// TODO
+/// Librairie de jeu TicTacToe
