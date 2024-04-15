@@ -5,8 +5,7 @@ Jeu::Jeu() {
 }
 
 Status Jeu::getStatus() const {
-    // TODO
-    return Status::RougeJoue;
+    return _status;
 }
 
 bool Jeu::areCoordsValid(int i, int j) const {
@@ -19,8 +18,8 @@ Cell Jeu::getCell(int i, int j) const {
 }
 
 std::ostream & operator<<(std::ostream & os, const Jeu & jeu) {
-    for (int i = 0; i < jeu._plateau.size(); i++) {
-        for (int j = 0; j < jeu._plateau.size(); j++) {
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
             auto cell = jeu.getCell(i, j);
             switch (cell)
             {
@@ -40,13 +39,36 @@ std::ostream & operator<<(std::ostream & os, const Jeu & jeu) {
     return os;
 }
 
+bool Jeu::isCellFree(int i, int j) {
+    if (!areCoordsValid(i, j)) return false;
+    return (getCell(i, j) == Cell::Vide);
+}
 
 bool Jeu::jouer(int i, int j) {
-    // TODO
+    if (isCellFree(i, j)) {
+        Status status = getStatus();
+        switch (status)
+        {
+        case Status::RougeJoue:
+            _plateau[i][j] = Cell::Rouge;
+            break;
+        case Status::VertJoue:
+            _plateau[i][j] = Cell::Vert;
+            break;
+        }
+        updateStatus();
+    }
     return false;
 }
 
+void Jeu::updateStatus() {
+    // TODO: check victoire
+
+    _status = _status == Status::RougeJoue ? Status::VertJoue : Status::RougeJoue;
+}
+
 void Jeu::raz() {
+    _status = Status::RougeJoue;
     for (int i = 0; i < _plateau.size(); i++) {
         _plateau[i].fill(Cell::Vide);
     }

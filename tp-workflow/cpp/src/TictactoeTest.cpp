@@ -37,6 +37,29 @@ TEST_CASE("test affichage (jeu vide)") {
     REQUIRE(output.str() == valid_output);
 }
 
+TEST_CASE("test jouer (1 tour)") {
+    Jeu jeu;
+    jeu.jouer(0, 2);
+    REQUIRE(jeu.getCell(0, 2) == Cell::Rouge);
+}
+
+TEST_CASE("test jouer (2 tours, 2 cases différentes)") {
+    Jeu jeu;
+    jeu.jouer(0, 2);
+    REQUIRE(jeu.getCell(0, 2) == Cell::Rouge);
+
+    jeu.jouer(2, 1);
+    REQUIRE(jeu.getCell(2, 1) == Cell::Vert);
+}
+
+TEST_CASE("test jouer (2 tours, 2 cases identiques)") {
+    Jeu jeu;
+    jeu.jouer(0, 2);
+    REQUIRE(jeu.getCell(0, 2) == Cell::Rouge);
+
+    jeu.jouer(0, 2);
+    REQUIRE(jeu.getCell(0, 2) == Cell::Rouge);
+}
 
     // TODO
 
