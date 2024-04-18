@@ -28,8 +28,6 @@ class Gui(Gtk.Window):
 
         # create game (from the C++ module)
         self.jeu = tictactoe.Jeu()
-        self.jeu.jouer(1, 1)
-        self.jeu.jouer(2, 2)
 
         # label
         self.label = Gtk.Label(label=self.jeu.getStatus().name)
@@ -50,51 +48,55 @@ class Gui(Gtk.Window):
 
     def on_draw(self, widget, context):
 
-        # TODO on_draw
-        self.label = Gtk.Label(label=self.jeu.getStatus().name)
+        self.label.set_text(self.jeu.getStatus().name)
 
         width = widget.get_allocated_width()
         height = widget.get_allocated_height()
 
+        self.case_width = width / 3
+        self.case_height = height / 3
+
         # Affichage des cases
-        for i in range(0, 3):
-            for j in range(0, 3):
+        for j in range(0, 3):
+            for i in range(0, 3):
                 context.set_source_rgb(0, 0, 0)
-                context.rectangle(i * 100, j * 100, 100, 100)
+                context.rectangle(i * self.case_width, j * self.case_height, self.case_width, self.case_height)
                 context.fill()
                 if self.jeu.getCell(i, j).name == "Rouge":
                     context.set_source_rgb(255, 0, 0)
-                    context.arc(i * 100 + 50, j * 100 + 50, 50, 0, 2 * math.pi)
+                    context.arc(i * self.case_width + self.case_width / 2, j * self.case_height + self.case_height / 2, (self.case_width / 2) - 10, 0, 2 * math.pi)
                     context.fill()
                 elif self.jeu.getCell(i, j).name == "Vert":
                     context.set_source_rgb(0, 255, 0)
-                    context.arc(i * 100 + 50, j * 100 + 50, 50, 0, 2 * math.pi)
+                    context.arc(i * self.case_width + self.case_width / 2, j * self.case_height + self.case_height / 2, (self.case_width / 2) - 10, 0, 2 * math.pi)
                     context.fill()
 
         # Affichage des lignes
         context.set_source_rgb(0.5, 0.5, 0.5)
         context.set_line_width(3)
-        context.move_to(100, 0)
-        context.line_to(100, 300)
+        context.move_to(self.case_width, 0)
+        context.line_to(self.case_width, 3 * self.case_height)
         context.stroke()
 
-        context.move_to(200, 0)
-        context.line_to(200, 300)
+        context.move_to(2 * self.case_width, 0)
+        context.line_to(2 * self.case_width, 3 * self.case_height)
         context.stroke()
 
-        context.move_to(0, 100)
-        context.line_to(300, 100)
+        context.move_to(0, self.case_height)
+        context.line_to(3 * self.case_width, self.case_height)
         context.stroke()
 
-        context.move_to(0, 200)
-        context.line_to(300, 200)
+        context.move_to(0, 2 * self.case_height)
+        context.line_to(3 * self.case_width, 2 * self.case_height)
         context.stroke()
 
 
     def on_area_button_press(self, widget, event):
-        # TODO on_area_button_press
         if event.button == 1:
-            print('TODO on_area_button_press')
+            x = int(event.x // self.case_width)
+            y = int(event.y // self.case_height)
+            self.jeu.jouer(x, y)
+            self.drawingarea.queue_draw()
             
 
     def on_button1_clicked(self, widget):
