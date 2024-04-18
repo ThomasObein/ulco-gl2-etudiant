@@ -9,7 +9,7 @@ Status Jeu::getStatus() const {
 }
 
 bool Jeu::areCoordsValid(int i, int j) const {
-    return (i >= 0 && i < _plateau.size() && j >= 0 && j < _plateau.size());
+    return (i >= 0 && i < 3 && j >= 0 && j < 3);
 }
 
 Cell Jeu::getCell(int i, int j) const {
@@ -59,6 +59,8 @@ bool Jeu::jouer(int i, int j) {
             if (hasVictory(Cell::Vert)) _status = Status::VertGagne;
             else _status = Status::RougeJoue;
             break;
+        default:
+            break;
         }
 
         if (!isGameFinished() && isGameDraw()) {
@@ -100,7 +102,7 @@ bool Jeu::hasVictory(Cell cellType) {
 
 void Jeu::raz() {
     _status = Status::RougeJoue;
-    for (int i = 0; i < _plateau.size(); i++) {
+    for (int i = 0; i < 3; i++) {
         _plateau[i].fill(Cell::Vide);
     }
 }
