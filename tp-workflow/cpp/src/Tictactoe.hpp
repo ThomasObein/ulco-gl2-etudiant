@@ -38,7 +38,7 @@ class Jeu {
         /// Retourne l'état d'une case du plateau
         Cell getCell(int i, int j) const;
 
-        /// Retourne vrai si la partie est terminée, faux sinon
+        /// Retourne true si la partie est terminée, false sinon
         bool isGameFinished();
 
         /// Joue un coup pour le joueur courant.
