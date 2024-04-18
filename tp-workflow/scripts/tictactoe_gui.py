@@ -25,24 +25,32 @@ class Gui(Gtk.Window):
         # horizontal box
         hbox = Gtk.Box()
         vbox.pack_end(hbox, False, False, 0)
+
+        # create game (from the C++ module)
+        self.jeu = tictactoe.Jeu()
+
         # label
-        self.label = Gtk.Label(label="TODO")
+        self.label = Gtk.Label(label=self.jeu.getStatus().name)
         hbox.pack_start(self.label, True, True, 0)
-        # TODO button1
+    
+        # button1
+        button1 = Gtk.Button(label="rejouer")
+        button1.connect("clicked", self.on_button1_clicked)
+        hbox.pack_start(button1, True, True, 0)
+
         # button2
         button2 = Gtk.Button(label="quitter")
         button2.connect("clicked", self.on_button2_clicked)
         hbox.pack_start(button2, True, True, 0)
 
-        # TODO create game (from the C++ module)
-        self.jeu = tictactoe.Jeu()
 
 
 
     def on_draw(self, widget, context):
 
         # TODO on_draw
-        
+        self.label = Gtk.Label(label=self.jeu.getStatus().name)
+
         width = widget.get_allocated_width()
         height = widget.get_allocated_height()
 
@@ -64,8 +72,7 @@ class Gui(Gtk.Window):
             
 
     def on_button1_clicked(self, widget):
-        # TODO on_button1_clicked
-        print('TODO on_button1_clicked')
+        self.jeu.raz()
         self.drawingarea.queue_draw()
 
     def on_button2_clicked(self, widget):
